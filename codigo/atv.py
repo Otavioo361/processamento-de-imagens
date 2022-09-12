@@ -3,11 +3,11 @@ import numpy as np
 import cv2
 
 
-obj_img = cv2.imread("img\tia1.png")
+obj_img = cv2.imread("img\lambo.png")
 obj_img = cv2.cvtColor(obj_img, cv2.COLOR_BGR2RGB)
 
 
-imgOpenCV = cv2.imread("img\tia1.png")
+imgOpenCV = cv2.imread("img\lambo.png")
 largura, altura, canais = imgOpenCV.shape
 
 
