@@ -1,0 +1,3 @@
+Por meio da função cv2.resize(), é possível redimensionar uma imagem passada por parâmetro. Usando-a como base, crie uma função chamada rescaleImage().
+
+Sua função deverá receber dois parâmetros: a própria imagem e seu tamanho em porcentagem. Dessa forma, a chamada rescaleImage(img, 50), por exemplo, reduzirá a imagem pela metade. Já a chamada rescaleImage(img, 200) a dobrará de tamanho.
