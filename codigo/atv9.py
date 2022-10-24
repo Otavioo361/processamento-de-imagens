@@ -101,7 +101,7 @@ def geraMarcaDagua(imagem1, fundo):
     cv2.imwrite("marcaDagua.png", finalImage)
 
 def main():
-    geraMarcaDagua("imgs/oi.jpg", "imgs/bug.png")
+    geraMarcaDagua("img/oi.jpg", "img/bug.png")
 
 if __name__ == "__main__":
     main()
