@@ -1,4 +1,3 @@
-#Faça um algoritmo que receba uma imagem e insira uma marca d'água sobre a figura.
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
@@ -17,32 +16,20 @@ def resizeImage(image, scalePercent):
 
     return image
 
-#Faz a sobreposição de duas imagens
-def addImageOverlay(background, foreground, translationForegroundW, translationForegroundH):
+#Faz a sobreposição de duas imagens 
+def addImageOverlay(background, foreground, transLar, transAl):
 
     #Pegando a altura e a largura da imagem da frente e da de trás
-    backH, backW, _ = background.shape
-    foreH, foreW, _ = foreground.shape
+    atrasAl, atrasLa, _ = background.shape
+    frenteAl, frenteLar, _ = foreground.shape
 
     #Subtraindo altura e largura da imagem, e pegando "oque sobra"
-    remainingH, remainingW = backH - foreH, backW - foreW
+    remainingH, remainingW = atrasAl - frenteAl, atrasLa - frenteLar
 
-    #Se a posição y da imagem normal + a altura dela forem maiores do que a altura da imagem de fundo
-    if translationForegroundH + foreH > backH:
-        print("Erro: Sobreposição com altura maior do que a permitida.")
-        print("Posição final que altura do objeto da frente termina:", translationForegroundH + foreH)
-        print("Altura do fundo:", backH)
-        return
-
-    #Se a posição x da imagem normal + a largura dela forem maiores do que a largura da imagem de fundo
-    if translationForegroundW + foreW > backW:
-        print("Erro: sobreposição com largura maior do que a permitida.")
-        print("Posição final que largura do objeto da frente termina:", translationForegroundW + foreW)
-        print("Largura do fundo:", backW)
-        return
 
     #Parte do cenário do fundo em que a imagem será adicionada
-    crop = background[translationForegroundH : foreH + translationForegroundH, translationForegroundW : foreW + translationForegroundW]
+    #photoshop mode
+    crop = background[transAl : frenteAl + transAl, transLar : frenteLar + transLar]
 
     #Transformamos o foreground em imagem com tons de cinza e criamos uma máscara binária da mesma com a binarização (cv2.threshold)
     foregroundGray = cv2.cvtColor(foreground, cv2.COLOR_BGR2GRAY) #Separa os pixels que compoem a imagem do fundo
@@ -111,10 +98,10 @@ def geraMarcaDagua(imagem1, fundo):
     finalImage = addBlendingEffect(finalImageUm, background, 0.5)
 
     showImage(finalImage)
-    cv2.imwrite("img\\900x500.png", finalImage)
+    cv2.imwrite("marcaDagua.png", finalImage)
 
 def main():
-    geraMarcaDagua("img\\bola.jpg", "img\\bola.jpg")
+    geraMarcaDagua("imgs/oi.jpg", "imgs/bug.png")
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ def viodeo():
 
 	video = cv2.VideoWriter('image_to_video.avi', fourcc, float(fps), (largura, altura))
 
-	directry = r'C:\\Users\Otavio\\Desktop\\Faculdade\\Processamento de imagem\\codigo\\img'
+	directry = r'C:\\Users\\Otavio\\Desktop\\Faculdade\\Processamento de imagem\\processamento-de-imagens\\codigo\\img'
 
 	current_contrast = 0
 	
@@ -29,19 +29,17 @@ def viodeo():
         #redimensionando a imagem
 		img_resize = cv2.resize(img, (largura, altura))
 
-		#Inicia com a cor preta(o de brilho) ate 1 segundo
+	#Inicia com a cor preta(o de brilho) ate 1 segundo
 		if((frame_count >= 1) and (frame_count < 10)):
-            #Conversao da img para 8 bits para poder colocar no video onde beta é o brilho e o alpha e o contraste
+			# #Conversao da img para 8 bits para poder colocar no video onde beta é o brilho e o alpha e o contraste
 		   img_resize = cv2.convertScaleAbs(img_resize, alpha = current_contrast / 100, beta = 0) 
-		   #abrindo a imagem no video
-           video.write(img_resize)
+		   video.write(img_resize)
 		   print(frame_count)
 		   
 		#Entrada da imagem
 		if((frame_count > 10) and (frame_count <= 30)):
-            
-		   img_resize = cv2.convertScaleAbs(img_resize, alpha = current_contrast / 100, beta = t)	   
-           video.write(img_resize)
+		   img_resize = cv2.convertScaleAbs(img_resize, alpha = current_contrast / 100, beta = t) 
+		   video.write(img_resize)
 		   t += 13
 		   
 		#Normal
