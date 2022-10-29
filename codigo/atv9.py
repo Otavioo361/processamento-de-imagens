@@ -1,12 +1,11 @@
 import numpy as np
 import cv2
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 
-def showImage(img):
-    from matplotlib import pyplot as plt
+def showImage(img):    
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    plt.imshow(img)
-    plt.show()
+    # plt.imshow(img)
+    # plt.show()
 
 #Redimensiona uma imagem
 def resizeImage(image, scalePercent):
@@ -45,7 +44,7 @@ def addImageOverlay(background, foreground, transLar, transAl):
 
     #Adicionamos a imagem gerada no background final.
     copyImage = background.copy()
-    copyImage[translationForegroundH:foreH + translationForegroundH, translationForegroundW:foreW + translationForegroundW] = combinedImage
+    copyImage[transLar:frenteAl + transLar, transAl:frenteLar + transAl] = combinedImage
 
     return copyImage
 
@@ -98,7 +97,7 @@ def geraMarcaDagua(imagem1, fundo):
     finalImage = addBlendingEffect(finalImageUm, background, 0.5)
 
     showImage(finalImage)
-    cv2.imwrite("marcaDagua.png", finalImage)
+    cv2.imwrite("morte.png", finalImage)
 
 def main():
     geraMarcaDagua("img/oi.jpg", "img/bug.png")
