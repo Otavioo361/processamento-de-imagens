@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-#from matplotlib import pyplot as plt
+
 
 def showImage(img):    
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -33,11 +33,21 @@ def addImageOverlay(background, foreground, transLar, transAl):
     #Transformamos o foreground em imagem com tons de cinza e criamos uma máscara binária da mesma com a binarização (cv2.threshold)
     foregroundGray = cv2.cvtColor(foreground, cv2.COLOR_BGR2GRAY) #Separa os pixels que compoem a imagem do fundo
     ret, maskFore = cv2.threshold(foregroundGray, 210, 255, cv2.THRESH_BINARY)  #Linearização
+    #O primeiro argumento é a imagem de origem, que deve ser uma imagem em tons de cinza. 
+    # O segundo argumento é o valor limite que é usado para classificar os valores de pixel. 
+    # O terceiro argumento é o valor máximo que é atribuído aos valores de pixel que excedem o limite.
+    #O OpenCV fornece diferentes tipos de limites que são dados pelo quarto parâmetro da função. 
+    # O limite básico, conforme descrito acima, é feito usando o tipo cv.THRESH_BINARY.
+     
 
-    #Agora aplicamos uma operação de AND binário na imagem recortada 'crop'. No caso, realizar a operação binária entre a mesma imagem não terá efeito. Só que, com a inclusão da máscara no terceiro parâmetro, os pixels pretos de maskFore serão ignorados e, portanto, ficarão escuros. Com isso temos a marcação em que vamos incluir o foreground posteriormente.
+    #Agora aplicamos uma operação de AND binário na imagem recortada 'crop'. 
+    # No caso, realizar a operação binária entre a mesma imagem não terá efeito.
+    #  Só que, com a inclusão da máscara no terceiro parâmetro, os pixels pretos de maskFore serão ignorados e, portanto, ficarão escuros.
+    #  Com isso temos a marcação em que vamos incluir o foreground posteriormente.
     backWithMask = cv2.bitwise_and(crop, crop, mask = maskFore)
     foreWithMask = cv2.bitwise_not(maskFore)
     foreWithMask = cv2.bitwise_and(foreground, foreground, mask = foreWithMask)
+    
 
     #Faremos a composição entre 'frente' e 'fundo', compondo o foreground na imagem extraída do background.
     combinedImage = cv2.add(foreWithMask, backWithMask)
@@ -94,10 +104,10 @@ def geraMarcaDagua(imagem1, fundo):
     finalImageUm = addImageOverlay(background, mark, 460, 30)
 
     #Adicionando o Blending
-    finalImage = addBlendingEffect(finalImageUm, background, 0.5)
+    #finalImage = addBlendingEffect(finalImageUm, background, 0.5)
 
-    showImage(finalImage)
-    cv2.imwrite("morte.png", finalImage)
+    showImage(finalImageUm)
+    cv2.imwrite("morte.png", finalImageUm)
 
 def main():
     geraMarcaDagua("img/oi.jpg", "img/bug.png")

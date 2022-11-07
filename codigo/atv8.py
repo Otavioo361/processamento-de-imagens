@@ -1,4 +1,4 @@
-
+#inicio da tarefa 4
 import numpy as np
 import cv2
 
