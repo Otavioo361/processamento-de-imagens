@@ -7,6 +7,7 @@ def claro():
 
     #Convertendo a imagem para HSV
     imgHsv = cv2.cvtColor(imgBgr, cv2.COLOR_BGR2HSV)
+    #hsv(hue,saturação e brilho)
     imgHsv[:, :, 2] = cv2.equalizeHist(imgHsv[:, :, 2])# O canal V no espaço de cores HSV que deixa mais claro a imagem
     saida = cv2.cvtColor(imgHsv, cv2.COLOR_HSV2BGR) #Convertendo a imagem de volta para BGR    
     cv2.imwrite("equalizeHist.jpg",saida)

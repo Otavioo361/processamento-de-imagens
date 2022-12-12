@@ -14,6 +14,7 @@ def histoCo():
     for i, col in enumerate(color): #For que vai iterar para cada canal
         mascara=None
         histograma = cv2.calcHist([img], [i], mascara, [255], [0,255]) #Função que gera os 3 histogramas separados.
+        #                         image   id    hist     intervalos
         plt.plot(histograma, color = col)    #Função que constroi o histograma definido, para o canal de cor específico
         #Obtenha ou defina os limites x dos eixos atuais.
         plt.xlim([0,255])    #Definindo os limites em relação a X desse histograma
