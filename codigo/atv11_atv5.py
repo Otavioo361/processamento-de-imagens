@@ -42,27 +42,31 @@ def computeTracking(frame, hue, sat, val):
     lowerColor = np.array([hue['min'], sat["min"], val["min"]])
     upperColor = np.array([hue['max'], sat["max"], val["max"]])
 
-    #Marcador pra saber se o pixel pertence ao intervalo ou não
+    #Marcador pra saber se o pixel pertence ao intervalo ou não. Se tiver no intervalo ele printa 255 se não tiver printa 0
     mask = cv2.inRange(hsvImage, lowerColor, upperColor)
 
     #Aplica máscara que "deixa passar" pixels pertencentes ao intervalo, como filtro
     #bitwise_and(source1_array,source2_array,destination_array,mask)
     #transforma a imagem/video para bit a bit e joga nos dois arrays como forma de mesclar,
     #Mas como só preciso da transformação jogo dentro do proprio frame
+    #faz aplicação e comparação comparando o videocom a mascara com a normal, caso seja diferente fica preto e caso fica branco é porque a mascara é igual ao video
     result = cv2.bitwise_and(frame, frame, mask = mask)
 
-    #Aplica limiarização
+    #Aplica limiarização. transforma em preto e branco 
+
     gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
     #Para cada pixel o valor limite é aplicado no caso um limite binario
     _,gray = cv2.threshold(gray, 0, 230, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-
+    #                       img/video       #flags da limiariazação(configuração da limiarização)
+    #abaixo do limiar fica branco e todo que fica acima fica preto
     #Encontra pontos que circundam regiões conexas (contour)
     #cv2.retr_list e cv2.CHAIN_APPROX_SIMPLE sao usados para fazer uma detecção de contornos
     contours, hierarchy = cv2.findContours(gray, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-
+    #                                                                  Pega só os pixels principais
     #Se existir contornos
     if contours:
         #Retornando a área do primeiro grupo de pixels brancos
+        #grupo de pontos do primeiro grupo que achou 
         maxArea = cv2.contourArea(contours[0])
         contourMaxAreaId = 0
         i = 0
@@ -72,6 +76,7 @@ def computeTracking(frame, hue, sat, val):
             #Procura o grupo com a maior área
             if maxArea < cv2.contourArea(cnt):
                 maxArea = cv2.contourArea(cnt)
+                #id para saber diferenciar contornos
                 contourMaxAreaId = i
             i += 1
 
@@ -80,10 +85,13 @@ def computeTracking(frame, hue, sat, val):
 
         #Retorna um retângulo que envolve o contorno em questão
         #Que faz um delimitador de pontos ou pixels diferente de zero de imagens de escala cinza
+        #cria uma caixa no contorno da cntMaxArea
         xRect, yRect, wRect, hRect = cv2.boundingRect(cntMaxArea)
+        #w vai ser a largura
 
-        #Desenha caixa envolvente com espessura 3
+        #Desenha caixa com espessura 2
         cv2.rectangle(frame, (xRect, yRect), (xRect + wRect, yRect + hRect), (255, 255, 0), 2)
+        #                       inicio  '       final                           #cores      #espessura
 
     return frame, gray
 
