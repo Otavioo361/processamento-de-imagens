@@ -37,7 +37,7 @@ def comparaHistograma(S1,S2,D1,D2,D3):
 
     distanciaS1S2 = 0
     distS1S2 = float(distanciaS1S2)
-
+                #raiz quadrada numero elevado
     distS1S2 = mt.sqrt(pow(correlacaoS1S2,2) + pow(chiSquareS1S2,2) + pow(bhattacharyyaS1S2,2))
     print("Distancia(S1,S2)   :", distS1S2)
     print("----------------------------------------------")
